@@ -67,21 +67,11 @@ class container {
      try{
         const contenido = await this.leer();
         const contProd = JSON.parse(contenido);
-        let ultId = 0;
-        const cantidadItems = contProd.length;
-        console.log(cantidadItems);
-
-        if(cantidadItems !== 0){
-            ultId = contProd[cantidadItems - 1].id;
-        }
-
-        producto['id'] = ultId + 1;
-        contenido.push(producto); 
-
-        contenido = JSON.stringify(contenido);
+        producto.id = contProd.length + 1;
+        contProd.push(producto);
+        
+        contenido = JSON.stringify(contProd);
         await fs.promises.writeFile(this.filename, contenido);
-
-        return producto['id'];
      } catch(error){
         throw new Error(error);
     }
